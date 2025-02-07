@@ -1,6 +1,7 @@
 require("dotenv").config();
 const zod = require("zod");
 const User = require("../models/User");
+const Account = require("../models/Account");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -44,8 +45,19 @@ const signup = async (req, res) => {
       lastName: req.body.lastName,
     });
 
-    // SEND RESPONSE
+    // Create account
     const userId = user._id;
+    try {
+      await Account.create({
+        userId,
+        balance: 1 + Math.random() * 10000,
+      });
+    } catch (error) {
+      console.error("Account creation error:", error);
+      return res.status(500).json({ message: "Error while creating account" });
+    }
+
+    // SEND RESPONSE
     const token = jwt.sign({ userId: user._id }, JWT_SECRET);
     res.json({ message: "User created successfully", token });
   } catch (error) {
