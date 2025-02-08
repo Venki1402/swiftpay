@@ -17,9 +17,9 @@ const getBalance = async (req, res) => {
 };
 
 const transfer = async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
-    const session = await mongoose.startSession();
-    session.startTransaction();
     const { amount, to } = req.body;
     const account = await Account.findOne({ userId: req.userId }).session(
       session
