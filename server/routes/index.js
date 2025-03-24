@@ -7,7 +7,7 @@ const router = express.Router();
 
 // routes
 router.get("/", (req, res) => {
-  res.send("PAYPAL API ON - 👋🌎🌍🌏");
+  res.send("SWIFTPAY API STATUS : ON");
 });
 router.use("/user", userRouter);
 router.use("/account", accountRouter);
