@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import BalanceCard from "../components/BalanceCard";
 import { getBalance } from "../utils/api";
 
-const Dashboard = ({ token, logout }) => {
+const Dashboard = ({ token }) => {
   const [balance, setBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -31,7 +31,7 @@ const Dashboard = ({ token, logout }) => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Navbar isAuthenticated={true} logout={logout} />
+      <Navbar isAuthenticated={true} />
 
       <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
         <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
@@ -71,7 +71,7 @@ const Dashboard = ({ token, logout }) => {
                 </div>
               </div>
             </div>
-          </>   
+          </>
         )}
       </main>
     </div>

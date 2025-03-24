@@ -48,17 +48,14 @@ export const updateUser = async (userData, token) => {
 };
 
 export const getUsers = async (filter, token) => {
-  console.log("venki", "getUsercalled");
   try {
-    const response = await fetch(`${API_URL}/user/bulk`, {
+    const response = await fetch(`${API_URL}/user/bulk/${filter}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ filter }),
     });
-    console.log("venki", response);
     return await response.json();
   } catch (error) {
     throw new Error("Get users failed");
@@ -89,7 +86,11 @@ export const transferMoney = async (transferData, token) => {
       },
       body: JSON.stringify(transferData),
     });
-    return await response.json();
+    const res = await response.json();
+    return {
+      success: true,
+      res,
+    };
   } catch (error) {
     throw new Error("Transfer failed");
   }

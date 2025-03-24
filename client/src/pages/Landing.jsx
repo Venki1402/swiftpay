@@ -69,15 +69,6 @@ const Landing = () => {
         </div>
       </main>
 
-      {/* <footer className="w-full py-6 px-6 bg-white border-t border-gray-200">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div></div>
-          <p className="text-sm text-gray-600">
-            © 2025 SwiftPay. All rights reserved.
-          </p>
-          <div>hi</div>
-        </div>
-      </footer> */}
       <footer className="w-full py-6 px-6 bg-white border-t border-gray-200">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex gap-4">

@@ -46,7 +46,7 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard token={token} logout={() => updateToken(null)} />
+              <Dashboard token={token} />
             </ProtectedRoute>
           }
         />

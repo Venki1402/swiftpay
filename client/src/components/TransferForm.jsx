@@ -24,11 +24,19 @@ const TransferForm = ({ onTransfer, selectedUser }) => {
       <h2 className="text-xl font-semibold mb-4">Send Money</h2>
 
       {selectedUser ? (
-        <div className="mb-4 p-3 bg-gray-50 rounded-md">
-          <p className="font-medium">
-            To: {selectedUser.firstName} {selectedUser.lastName}
-          </p>
-          <p className="text-sm text-gray-600">{selectedUser.username}</p>
+        <div className="mb-4 p-3 bg-gray-50 rounded-md flex justify-between">
+          <div>
+            <p className="font-medium">
+              To: {selectedUser.firstName} {selectedUser.lastName}
+            </p>
+            <p className="text-sm text-gray-600">{selectedUser.username}</p>
+          </div>
+          <div className="h-12 w-12 bg-gray-200 rounded-full flex items-center justify-center">
+            <p className="text-2xl">
+              {selectedUser.firstName[0].toUpperCase()}
+              {selectedUser.lastName[0].toUpperCase()}
+            </p>
+          </div>
         </div>
       ) : (
         <p className="mb-4 text-gray-500">Please select a recipient first</p>

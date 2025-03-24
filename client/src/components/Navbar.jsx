@@ -6,7 +6,7 @@ const Navbar = ({ isAuthenticated, logout }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    localStorage.removeItem("token");
     navigate("/");
   };
 

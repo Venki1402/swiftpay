@@ -1,27 +1,38 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
 import Navbar from "../components/Navbar";
 import UserList from "../components/UserList";
 import TransferForm from "../components/TransferForm";
 import { getUsers, transferMoney, getBalance } from "../utils/api";
 
 const Send = ({ token }) => {
-  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [balance, setBalance] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [userFilter, setUserFilter] = useState("");
+  const [isLoadingInitial, setIsLoadingInitial] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // Memoize the getUsers function to prevent recreating on each render
+  const fetchUsers = useCallback(
+    async (filter = "") => {
+      try {
+        const response = await getUsers(filter, token);
+        return response;
+      } catch (err) {
+        console.error("Error fetching users:", err);
+        return { users: [] };
+      }
+    },
+    [token]
+  );
+
+  // Initial data load
   useEffect(() => {
     const fetchInitialData = async () => {
-      setIsLoading(true);
+      setIsLoadingInitial(true);
       try {
-        // Fetch users
-        const usersResponse = await getUsers(userFilter, token);
-        console.log(usersResponse)
+        // Fetch initial users without filter
+        const usersResponse = await fetchUsers();
         if (usersResponse.users) {
           setUsers(usersResponse.users);
         }
@@ -34,12 +45,12 @@ const Send = ({ token }) => {
       } catch (err) {
         setError("Failed to load initial data");
       } finally {
-        setIsLoading(false);
+        setIsLoadingInitial(false);
       }
     };
 
     fetchInitialData();
-  }, [token, userFilter]);
+  }, [token, fetchUsers]);
 
   const handleSelectUser = (user) => {
     setSelectedUser(user);
@@ -56,7 +67,7 @@ const Send = ({ token }) => {
 
     try {
       const response = await transferMoney({ to: userId, amount }, token);
-      if (response.success) {
+      if (response) {
         setSuccess(
           `Successfully sent ₹${amount} to ${selectedUser.firstName} ${selectedUser.lastName}`
         );
@@ -67,7 +78,7 @@ const Send = ({ token }) => {
           setBalance(balanceResponse.balance);
         }
 
-        // Reset form
+        // Reset selection
         setSelectedUser(null);
       } else {
         setError(response.message || "Transfer failed");
@@ -77,9 +88,15 @@ const Send = ({ token }) => {
     }
   };
 
-  const handleFilterChange = (e) => {
-    setUserFilter(e.target.value);
-  };
+  // Success message auto-dismiss
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setSuccess("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -106,24 +123,7 @@ const Send = ({ token }) => {
           </p>
         </div>
 
-        <div className="mb-6">
-          <label
-            htmlFor="userFilter"
-            className="block text-sm font-medium mb-2"
-          >
-            Search Users
-          </label>
-          <input
-            type="text"
-            id="userFilter"
-            value={userFilter}
-            onChange={handleFilterChange}
-            className="w-full max-w-md p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Search by name or email"
-          />
-        </div>
-
-        {isLoading ? (
+        {isLoadingInitial ? (
           <div className="flex flex-col md:flex-row gap-6 animate-pulse">
             <div className="w-full md:w-1/2 bg-white rounded-lg border border-gray-200 p-6 h-64">
               <div className="h-6 bg-gray-200 rounded w-1/4 mb-4"></div>
@@ -149,6 +149,8 @@ const Send = ({ token }) => {
                 users={users}
                 onSelectUser={handleSelectUser}
                 selectedUserId={selectedUser?._id}
+                token={token}
+                getUsers={fetchUsers}
               />
             </div>
 

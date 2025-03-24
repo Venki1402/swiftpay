@@ -114,8 +114,7 @@ const updateUser = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  console.log('venki', req.body);
-  const filter = req.body.filter || "";
+  const filter = req.params?.filter || "";
 
   const users = await User.find({
     $or: [
