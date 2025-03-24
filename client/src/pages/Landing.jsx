@@ -73,7 +73,7 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex gap-4">
             <a
-              href="https://github.com/Venki1402"
+              href="https://github.com/Venki1402/swiftpay"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-gray-900 transition"
