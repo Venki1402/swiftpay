@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import UserList from "../components/UserList";
@@ -21,6 +21,7 @@ const Send = ({ token }) => {
       try {
         // Fetch users
         const usersResponse = await getUsers(userFilter, token);
+        console.log(usersResponse)
         if (usersResponse.users) {
           setUsers(usersResponse.users);
         }

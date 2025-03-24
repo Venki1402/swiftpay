@@ -48,6 +48,7 @@ export const updateUser = async (userData, token) => {
 };
 
 export const getUsers = async (filter, token) => {
+  console.log("venki", "getUsercalled");
   try {
     const response = await fetch(`${API_URL}/user/bulk`, {
       method: "GET",
@@ -57,6 +58,7 @@ export const getUsers = async (filter, token) => {
       },
       body: JSON.stringify({ filter }),
     });
+    console.log("venki", response);
     return await response.json();
   } catch (error) {
     throw new Error("Get users failed");
