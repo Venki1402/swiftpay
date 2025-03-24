@@ -50,7 +50,7 @@ const signup = async (req, res) => {
     try {
       await Account.create({
         userId,
-        balance: 1 + Math.random() * 10000,
+        balance: 1000,
       });
     } catch (error) {
       console.error("Account creation error:", error);

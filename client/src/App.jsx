@@ -26,6 +26,16 @@ function App() {
     return children;
   };
 
+  useEffect(() => {
+    const pathname = window.location.pathname;
+    if (
+      token &&
+      (pathname === "/" || pathname === "/signin" || pathname === "/signup")
+    ) {
+      window.location.href = "/dashboard";
+    }
+  }, [token]);
+
   return (
     <BrowserRouter>
       <Routes>

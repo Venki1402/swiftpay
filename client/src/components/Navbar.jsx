@@ -27,7 +27,7 @@ const Navbar = ({ isAuthenticated, logout }) => {
             </Link>
             <button
               onClick={handleLogout}
-              className="text-black hover:text-blue-600"
+              className="text-black hover:text-red-600"
             >
               Logout
             </button>

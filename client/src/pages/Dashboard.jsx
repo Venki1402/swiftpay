@@ -62,9 +62,16 @@ const Dashboard = ({ token, logout }) => {
                 >
                   Send Money
                 </Link>
+                {/* Future Additions */}
+                <div className="inline-flex items-center justify-center py-3 px-6  text-white rounded-md bg-gray-800 transition-colors cursor-default">
+                  Transactions
+                </div>
+                <div className="inline-flex items-center justify-center py-3 px-6  text-white rounded-md bg-gray-800 transition-colors cursor-default">
+                  Auto Pay
+                </div>
               </div>
             </div>
-          </>
+          </>   
         )}
       </main>
     </div>
