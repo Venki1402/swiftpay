@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api/v1";
+const API_URL = "https://swiftpaybackend.onrender.com/api/v1";
 
 // User APIs
 export const signUp = async (userData) => {
